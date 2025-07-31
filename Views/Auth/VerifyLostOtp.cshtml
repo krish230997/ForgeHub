@@ -1,0 +1,142 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Verify OTP";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - AIG Forge Hub</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .login-wrapper {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-section {
+            width: 100%;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0.5rem 4rem 2rem 10rem;
+            position: relative;
+        }
+
+        .center-image {
+            position: absolute;
+            top: 50%;
+            left: 75%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            width: 50vw;
+            height: 100vh;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        .right-section {
+            display: none;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            color: #0056d2;
+        }
+
+            .logo img {
+                height: 25px;
+                margin-right: 8px;
+            }
+
+        .login-title {
+            font-size: 35px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        .login-subtitle {
+            font-size: 18px;
+            font-weight: normal;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .form-control {
+            height: 40px;
+            width: 150%;
+        }
+
+        .btn-login {
+            background-color: #0062ff;
+            color: white;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            width: 400px;
+            display: block;
+            margin-left: calc(50% - 200px + 70px);
+        }
+
+        .text-danger {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-wrapper">
+        <div class="logo">
+            <img src="~/images/gear-icon.png" alt="Logo" />
+            AIG Forge Hub
+        </div>
+        <div class="left-section">
+            <div class="login-title">Verify OTP</div>
+            <div class="login-subtitle">Enter the code sent to your registered email</div>
+
+            <form asp-action="VerifyLostOtp" method="post">
+                <div class="mb-3 w-100">
+                    <label for="otp" class="form-label">OTP Code</label>
+                    <input type="text" name="otp" id="otp" required class="form-control" maxlength="6" placeholder="Enter your 6-digit OTP" />
+                </div>
+
+                <button type="submit" class="btn-login">Verify</button>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="text-danger">@ViewBag.Error</div>
+                }
+            </form>
+        </div>
+
+
+        <div class="right-section"></div>
+        <img src="~/images/verifyotp.png" alt="OTP Illustration" class="center-image" />
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "forgehub",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@react-three/drei": "^10.6.1",
+    "@react-three/fiber": "^9.2.0",
+    "gsap": "^3.13.0",
+    "postprocessing": "^6.37.6",
+    "three": "^0.178.0",
+    "three-stdlib": "^2.36.0"
+  }
+}

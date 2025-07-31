@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"] - Admin</title>
+    <!-- Bootstrap Bundle with Popper.js -->
+    
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 70px;
+            background-color: white;
+            border-right: 1px solid #dee2e6;
+            transition: width 0.3s ease;
+            overflow-x: hidden;
+            z-index: 1001;
+        }
+
+            .sidebar:hover {
+                width: 250px;
+            }
+
+            .sidebar .sidebar-logo {
+                height: 60px;
+                background-color: dodgerblue;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+        .sidebar-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .sidebar .nav-link {
+            color: #333;
+            padding: 15px 20px;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+
+            .sidebar .nav-link i {
+                font-size: 1.3rem;
+                margin-right: 12px;
+            }
+
+            .sidebar .nav-link span {
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+        .sidebar:hover .nav-link span {
+            opacity: 1;
+        }
+
+        .topbar {
+            position: fixed;
+            top: 0; /* Add this */
+            width: calc(100% - 70px);
+            left: 70px;
+            height: 70px;
+            background-color: white;
+            border-bottom: 1px solid #dee2e6;
+            padding: 10px 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: left 0.3s ease, width 0.3s ease;
+        }
+
+
+        .sidebar:hover ~ .topbar {
+            left: 250px;
+            width: calc(100% - 250px);
+        }
+
+        .main-content {
+            margin-left: 70px;
+            margin-top: 10px;
+            padding: 30px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar:hover ~ .main-content {
+            margin-left: 250px;
+        }
+
+        .main-content .container-fluid {
+            max-width: 2000px;
+            margin-top: 70px;
+            
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <img src="~/images/Logo4.png" alt="Logo" />
+        </div>
+
+        <a asp-controller="Admin" asp-action="Dashboard" class="nav-link">
+            <i class="bi bi-speedometer2"></i>
+            <span>Dashboard</span>
+        </a>
+        <a asp-controller="Admin" asp-action="FetchRFQ" class="nav-link">
+            <i class="bi bi-journals"></i>
+            <span>RFQ List</span>
+        </a>
+        <a asp-controller="Admin"asp-action="ViewVendorQuotations" class="nav-link">
+            <i class="bi bi-card-checklist"></i>
+            <span>Vendor Quotations</span>
+        </a>
+        <a asp-controller="Admin" asp-action="FetchFinalizedQuotaions" class="nav-link">
+            <i class="bi bi-check2-circle"></i>
+            <span>Finalized Quotations</span>
+        </a>
+        <a asp-controller="AddUser" asp-action="Index" class="nav-link">
+            <i class="bi bi-people-fill "></i>
+            <span>Users</span>
+        </a>
+    </div>
+
+    <!-- Topbar -->
+    <div class="topbar">
+        <h5 class="mb-0">@ViewData["Title"]</h5>
+        <div class="d-flex align-items-center gap-3 position-relative">
+            <i class="bi bi-bell fs-5"></i>
+
+            <div class="dropdown">
+                <img src="/images/User.png" alt="User" class="rounded-circle" width="35" height="35"
+                     role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container-fluid">
+        <partial name="Notification" />
+        @RenderBody()
+        </div>
+    </div>
+
+    @RenderSection("Scripts", required: false)
+   
+</body>
+</html>

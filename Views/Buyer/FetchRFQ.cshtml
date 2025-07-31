@@ -1,0 +1,246 @@
+﻿@model List<RFQ>
+
+@{
+    ViewData["Title"] = "RFQ List";
+    Layout = "~/Views/Shared/_BuyerLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    .page-header {
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.95rem;
+        font-weight: 500;
+        border-radius: 6px;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+
+    .table-container {
+        width: 100%;
+        padding: 0 2rem;
+    }
+
+    #rfqTable {
+        width: 100% !important;
+        font-size: 0.9rem;
+        background-color: white;
+        border-collapse: collapse;
+        color: #555; /* slightly gray text */
+    }
+
+        #rfqTable th {
+            background-color: white;
+            color: #666; /* slightly darker gray for headers */
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e2e2; /* light border */
+            text-align: center;
+        }
+
+        #rfqTable td {
+            padding: 0.75rem 1rem;
+            text-align: center;
+            vertical-align: middle;
+            border-top: 1px solid #f0f0f0; /* very light row separator */
+            color: #666; /* light gray text */
+        }
+
+            #rfqTable td i {
+                font-size: 1.2rem;
+                margin: 0 0.35rem;
+                color: #007bff;
+                cursor: pointer;
+            }
+
+                #rfqTable td i:hover {
+                    color: #0056b3;
+                }
+
+
+    .dataTables_wrapper .dataTables_filter input,
+    .dataTables_wrapper .dataTables_length select {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.9rem;
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        width: auto;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        padding: 0.4rem 0.8rem;
+        margin: 0 0.2rem;
+        font-size: 0.9rem;
+        border-radius: 6px;
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        color: #007bff;
+    }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: #e2e6ea;
+            color: #0056b3;
+        }
+
+</style>
+
+
+<div class="container-fluid table-container">
+    <div class="page-header">
+        <h2 style="color: dodgerblue;">RFQ List</h2>
+        <a asp-controller="Buyer" asp-action="AddRFQ" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i> Add RFQ
+        </a>
+
+    </div>
+
+    <div class="table-responsive">
+        <table id="rfqTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>RFQ No</th>
+                    <th>Item Name</th>
+                    <th>Factory Code</th>
+                    <th>Contact Person</th>
+                    <th>Delivery Period</th>
+                    <th>Mobile No</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var rfq in Model)
+                {
+                    <tr>
+                        <td>@rfq.RFQNo</td>
+                        <td>@rfq.ItemName</td>
+                        <td>@rfq.FactoryCode</td>
+                        <td>@rfq.ContactPerson</td>
+                        <td>@rfq.ReqDeliveryDate?.ToString("dd-MMM-yyyy")</td>
+                        <td>@rfq.Mobile</td>
+                        <td>
+                           
+                            <a data-bs-toggle="modal" data-bs-target="#rfqModal_@rfq.RFQId">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@foreach (var rfq in Model)
+{
+    <div class="modal fade" id="rfqModal_@rfq.RFQId" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-primary shadow">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">RFQ Full Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body px-4">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>RFQ No</label>
+                            <input class="form-control" value="@rfq.RFQNo" readonly />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Indent No</label>
+                            <input class="form-control" value="@rfq.IndentNo" readonly />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Item Name</label>
+                            <input class="form-control" value="@rfq.ItemName" readonly />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Item No</label>
+                            <input class="form-control" value="@rfq.ItemNo" readonly />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Description</label>
+                            <input class="form-control" value="@rfq.Description" readonly />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Required Quantity</label>
+                            <input class="form-control" value="@rfq.ReqQty" readonly />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Delivery Location</label>
+                            <input class="form-control" value="@rfq.DeliveryLocation" readonly />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Required Delivery Date</label>
+                            <input class="form-control" value="@rfq.ReqDeliveryDate?.ToString("yyyy-MM-dd")" readonly />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Factory Code</label>
+                            <input class="form-control" value="@rfq.FactoryCode" readonly />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>UOM</label>
+                            <input class="form-control" value="@rfq.UOM" readonly />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Expiry of Bid</label>
+                            <input class="form-control" value="@rfq.ExpiryDateofBid?.ToString("yyyy-MM-dd")" readonly />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Mobile</label>
+                            <input class="form-control" value="@rfq.Mobile" readonly />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Contact Person</label>
+                            <input class="form-control" value="@rfq.ContactPerson" readonly />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#rfqTable').DataTable({
+                paging: true,
+                searching: true,
+                lengthChange: true,
+                pageLength: 5,
+                lengthMenu: [5, 10, 25, 50, 100],
+                autoWidth: false,
+                language: {
+                    lengthMenu: "Rows per page _MENU_",
+                    emptyTable: "No RFQs available"
+                }
+            });
+        });
+    </script>
+}

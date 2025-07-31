@@ -1,0 +1,265 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - AIG Forge Hub</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+
+
+
+        .login-wrapper {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .left-section {
+            width: 60%;
+            padding: 0.5rem 4rem 2rem 10rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: white;
+            animation: slideInLeft 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        @@keyframes slideInLeft {
+            from {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .right-section {
+            width: 40%;
+            background-color: #0056d2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .right-section img {
+                max-width: 90%;
+                max-height: 90%;
+                border-radius: 20px;
+                opacity: 0;
+                animation: slideFadeInZoom 1.2s ease-out forwards;
+                animation-delay: 0.4s;
+            }
+
+        @@keyframes slideFadeInZoom {
+            0% {
+                opacity: 0;
+                transform: translateX(50px) scale(0.95);
+                filter: blur(6px);
+            }
+
+            60% {
+                opacity: 0.6;
+                transform: translateX(0) scale(1.02);
+                filter: blur(2px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            color: #0056d2;
+            font-size: 1.8rem;
+            opacity: 1 !important; /* ✅ Forcefully visible */
+            z-index: 10; /* ✅ Ensure it's above others */
+        }
+
+            .logo img {
+                height: 50px;
+                margin-right: 12px;
+            }
+
+        .login-title {
+            font-size: 35px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #0056d2;
+            animation: fadeIn 1s ease 0.3s forwards;
+            opacity: 0;
+        }
+
+        .login-subtitle {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #333;
+            animation: fadeIn 1s ease 0.5s forwards;
+            opacity: 0;
+        }
+
+        @@keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .form-container {
+            width: 50%;
+            max-width: 350px;
+        }
+
+        .form-control {
+            height: 40px;
+            width: 50%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            transition: box-shadow 0.3s ease, border 0.3s ease;
+        }
+
+            .form-control:focus {
+                border-color: #0056d2;
+                box-shadow: 0 0 5px rgba(0, 86, 210, 0.4);
+                outline: none;
+            }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .forgot-password {
+            font-size: 0.9rem;
+            color: #0056d2;
+            text-decoration: none;
+        }
+
+            .forgot-password:hover {
+                text-decoration: underline;
+            }
+
+        .btn-login {
+            background-color: #0056d2;
+            color: white;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-login:hover {
+                background-color: #003f9a;
+            }
+
+            .btn-login::after {
+                content: "";
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: 0;
+                height: 0;
+                background: rgba(255,255,255,0.3);
+                transform: translate(-50%, -50%);
+                border-radius: 100%;
+                transition: width 0.4s ease, height 0.4s ease;
+            }
+
+            .btn-login:active::after {
+                width: 200%;
+                height: 500%;
+            }
+
+        .text-danger {
+            margin-top: 10px;
+            color: #dc3545;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="login-wrapper">
+        <div class="logo">
+            <img src="~/images/logoicon.png" alt="Logo" />
+            AIG Forge Hub
+        </div>
+
+        <div class="left-section">
+            <div class="login-title">Login</div>
+            <div class="login-subtitle">Login to access your AIG ForgeHub account</div>
+
+            <form asp-action="Login" method="post">
+                <div class="mb-3 w-100">
+                    <label for="email" class="form-label">Enter Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Type your Email here" required />
+                </div>
+                <div class="mb-3 w-100">
+                    <label for="password" class="form-label">Enter your Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Type your password here" required />
+                </div>
+
+                <div class="form-options w-50">
+                    <div class="form-check m-0">
+                        <input type="checkbox" class="form-check-input" id="rememberMe" />
+                        <label class="form-check-label" for="rememberMe">Remember me?</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-login w-50">Submit</button>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="text-danger">@ViewBag.Error</div>
+                }
+            </form>
+        </div>
+
+        <!-- ✅ Image placed inside right-section properly -->
+        <div class="right-section">
+            <img src="~/images/login.jpg" alt="Login" />
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

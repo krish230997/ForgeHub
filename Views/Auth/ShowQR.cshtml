@@ -1,0 +1,157 @@
+﻿@{
+    Layout = null;
+}
+
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .qr-wrapper {
+        display: flex;
+        height: 100vh;
+        width: 100vw;
+        position: relative;
+    }
+
+    .left-section {
+        width: 50%;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 2rem 4rem 2rem 6rem;
+    }
+
+    .right-section {
+        width: 50%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .section-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0;
+    }
+
+
+    .center-image {
+        position: absolute;
+        top: 50%;
+        left: 80%;
+        transform: translate(-50%, -50%);
+        max-width: 100%;
+        max-height: 85vh;
+        border-radius: 20px;
+        pointer-events: none;
+    }
+
+
+
+
+    .back-link {
+        text-decoration: none;
+        color: gray;
+        font-size: 14px;
+        margin-bottom: 20px;
+        align-self: flex-start;
+    }
+
+    .qr-title {
+        font-size: 35px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+
+
+    .logo {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        color: #0056d2;
+        font-size: 1.8rem; /* default font size, overridden by .logo-title */
+    }
+
+        .logo img {
+            height: 50px; /* Increased logo size */
+            margin-right: 12px;
+        }
+
+        .logo .logo-title {
+            font-size: 2rem; /* Bigger text */
+            font-weight: 700; /* Bold */
+            line-height: 1; /* Align nicely with logo */
+        }
+
+
+    .qr-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 100px;
+    }
+
+    .qr-img {
+        max-width: 250px;
+    }
+
+    .btn-proceed {
+        background-color: #0062ff;
+        color: white;
+        padding: 10px 30px;
+        border: none;
+        border-radius: 4px;
+        font-weight: 500;
+        width: 450px;
+        display: block;
+        margin-left: calc(50% - 225px + 10px);
+    }
+
+</style>
+
+<div class="qr-wrapper">
+    <div class="logo">
+        <img src="~/images/logoicon.png" alt="Logo" />
+        AIG Forge Hub
+    </div>
+
+    <!-- Left Section -->
+    <div class="left-section">
+        <a asp-action="Login" asp-controller="User" class="back-link">&larr; Back To Login</a>
+
+        <div class="qr-title">
+            Scan the QR code below<br />
+            to authenticate yourself via Google.
+        </div>
+
+        @if (ViewBag.QRCodeImage != null)
+        {
+            <div class="qr-container">
+                <img src="@ViewBag.QRCodeImage" alt="QR Code" class="mb-4 qr-img" />
+                <form asp-action="VerifyOtp" method="get">
+                    <button type="submit" class="btn-proceed">Proceed</button>
+                </form>
+            </div>
+        }
+
+    </div>
+
+    <!-- Right Section -->
+    <div class="right-section">
+        <img src="~/images/show-QR.png" alt="Scan Illustration" class="section-image" />
+    </div>
+
+
+</div>
